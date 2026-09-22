@@ -22,14 +22,27 @@ names a target of "4 of 5", and four of three is not a thing.
 """
 
 QUESTIONS = [
-    # {"question": "...", "expects": "..."},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
+    {
+        "question": "When are housing lottery numbers released?",
+        "expects": "second week of March",
+    },
+    {
+        "question": "Which part of Innisfree Hall is quieter?",
+        "expects": "short wing",
+    },
+    {
+        "question": "When is the best time to do laundry at Old Brewhouse?",
+        "expects": "Tuesday or Wednesday morning",
+    },
+    {
+        "question": "How is the STAT 150 course assessed?",
+        "expects": "three equally weighted midterms",
+    },
+    {
+        "question": "What signature is required to withdraw by week ten?",
+        "expects": "adviser signature",
+    },
 ]
-
 # Questions from a different world entirely. Your gate should refuse all five.
 #
 # There are five of these because criterion 3 in criteria.md names a target of

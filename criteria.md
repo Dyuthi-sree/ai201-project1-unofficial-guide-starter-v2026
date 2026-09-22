@@ -19,78 +19,41 @@ pipeline earns credit; *"80% seemed reasonable"* does not.
 
 ## 1. Retrieved chunks contain the answer
 
-For at least 4 of my 5 test questions, the retrieved chunks include one that
-contains the answer.
+For at least 4 of my 5 test questions, the retrieved chunks include one that contains the expected answer recorded in `questions.py`.
 
-**Why this target:**
-<!-- e.g. "One of my questions is about a topic only two documents mention, so
-     I expect that one to be hard." -->
+**Why this target:** The `campus_life` corpus contains 88 short documents, and each of my questions asks for a specific fact found in one document. I chose 4 of 5 because retrieval may miss one question when several campus documents use similar words for different topics.
 
 ---
 
 ## 2. Every answer names a source
 
-Every answer the system produces names at least one source document.
+Every answer the system produces for my five test questions names at least one source document.
 
-**Why this target:**
-<!-- Why all five and not four? What about your setup makes that achievable —
-     or what would have to go wrong for it not to be? -->
+**Why this target:** The corpus contains separate files for housing, courses, deadlines, and other campus topics. Since the pipeline keeps the filename as metadata and provides retrieved sources to the generator, every generated answer should identify where its information came from.
 
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
 
-When I ask a question my documents clearly don't cover, the relevance gate
-stops it and the system returns "I don't have enough information about that" —
-in at least 4 of 5 tries.
+When I run the five questions in `OUT_OF_SCOPE` from `questions.py`, the relevance gate stops generation and returns "I don't have enough information about that" in at least 4 of 5 cases.
 
-<!-- The five questions are the ones in `OUT_OF_SCOPE` at the bottom of
-     `questions.py`, and `run_eval.py` puts them through the gate and writes
-     what happened into your run log. Swap them for your own if you'd rather —
-     just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
-
-**Why this target:**
-<!-- What did your distances look like when you set the cutoff in Milestone 4?
-     Was there a clean gap, or did the two groups overlap? -->
+**Why this target:** The corpus only covers campus-life information, while the out-of-scope questions concern unrelated topics such as world facts, engines, medicine, and programming. I allow one possible mismatch because vector similarity can occasionally connect unrelated questions through shared words.
 
 ---
 
-## 4. Something about your chunks
+## 4. Chunks preserve complete thoughts
 
-<!-- YOU WRITE THIS ONE.
+At least 4 of 5 sampled chunks begin and end at a sentence or paragraph boundary and contain at least one complete sentence.
 
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
-
-     Examples of the right shape — don't copy these, they should come from
-     what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
-
-
-
-**Why this target:**
-
-
+**Why this target:** The `campus_life` documents are short posts of approximately 178 to 549 characters and usually contain one to three paragraphs. Preserving sentence or paragraph boundaries should retain their useful facts without producing incomplete fragments.
 
 ---
 
-## 5. Your choice
+## 5. Sources are connected to retrieved evidence
 
-<!-- YOU WRITE THIS ONE TOO.
+For all 5 test questions that receive generated answers, every source named in the answer must appear among the documents retrieved for that question.
 
-     Pick something you actually care about getting right. It could be about
-     speed, about refusals, about a particular kind of question your corpus
-     handles badly, about source attribution being correct rather than merely
-     present — anything, as long as it names a number or an observable
-     outcome. -->
-
-
-
-**Why this target:**
-
+**Why this target:** The corpus contains 88 documents, including several files about related topics such as housing and academic administration. Merely displaying a filename is not sufficient; the cited source should be part of the evidence actually retrieved by the pipeline.
 
 
 ---
