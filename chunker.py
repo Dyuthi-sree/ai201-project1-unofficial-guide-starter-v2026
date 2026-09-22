@@ -82,22 +82,54 @@ def fallback_split(
 
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
+    Split campus-life documents at paragraph boundaries.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
-
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
-
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    The corpus contains short posts, so related paragraphs remain together
+    until adding another paragraph would exceed 600 characters.
+    No overlap is needed because chunks are never cut in the middle of
+    a paragraph.
     """
-    return fallback_split(documents)
+    max_chunk_size = 600
+    chunks: list[Chunk] = []
+
+    for doc in documents:
+        paragraphs = [
+            paragraph.strip()
+            for paragraph in doc.text.split("\n\n")
+            if paragraph.strip()
+        ]
+
+        current_paragraphs: list[str] = []
+        chunk_index = 0
+
+        for paragraph in paragraphs:
+            candidate = "\n\n".join(current_paragraphs + [paragraph])
+
+            if current_paragraphs and len(candidate) > max_chunk_size:
+                chunks.append(
+                    Chunk(
+                        text="\n\n".join(current_paragraphs),
+                        source=doc.source,
+                        index=chunk_index,
+                        produced_by="chunker.py::split_documents",
+                    )
+                )
+                chunk_index += 1
+                current_paragraphs = [paragraph]
+            else:
+                current_paragraphs.append(paragraph)
+
+        if current_paragraphs:
+            chunks.append(
+                Chunk(
+                    text="\n\n".join(current_paragraphs),
+                    source=doc.source,
+                    index=chunk_index,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
+
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:
