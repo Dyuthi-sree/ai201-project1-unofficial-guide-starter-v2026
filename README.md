@@ -21,9 +21,8 @@
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
+<!-- 
+The Unofficial Guide is a retrieval-augmented generation system built using the `campus_life` corpus. The corpus contains 88 short documents covering academic deadlines, registration, dining, housing, transportation, and other campus experiences. Users can ask specific questions about campus policies and student advice. The system retrieves relevant chunks, generates a grounded answer, and names the source document.
 
      Milestone 5. -->
 
