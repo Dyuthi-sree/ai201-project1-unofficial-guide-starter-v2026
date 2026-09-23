@@ -1,19 +1,7 @@
 # The Unofficial Guide
 
-<!-- **Dyuthisree Marigidda — Corpus: `campus_life`** -->
-
-> **This file is your submission.** Fill it in as you go — most sections get
-> written during the milestone that produces them, not at the end.
->
-> How the starter works, and every command you'll need, is in `RUNNING.md`.
-> Leave that file alone.
->
-> **Paste everything as text.** No screenshots, no video. A typed table gets
-> full credit; a picture of the same table gets none.
->
-> Delete these instruction blocks as you replace them. The `<!-- -->` comments
-> are notes to you and don't show up when the page renders — you can leave them
-> or remove them.
+**Student:** Dyuthisree Marigidda  
+**Corpus:** `campus_life`
 
 ---
 
@@ -21,14 +9,16 @@
 
 ## What This Does
 
-The Unofficial Guide is a retrieval-augmented generation system built using the `campus_life` corpus. The corpus contains 88 short documents covering academic deadlines, registration, dining, housing, transportation, courses, and other campus experiences. Users can ask specific questions about campus policies and student advice. The system retrieves relevant chunks, generates an answer grounded in those chunks, and names the source document.
+The Unofficial Guide is a retrieval-augmented generation system built using the `campus_life` corpus. The corpus contains 88 short documents covering academic deadlines, course workloads, registration, dining, housing, transportation, and other campus experiences. Users can ask specific questions about campus policies and student life. The system retrieves relevant chunks, generates an answer grounded in those chunks, and identifies the source documents used.
 
 ## Chunking Strategy
 
-**Chunk size:** Maximum 600 characters  
+**Chunk size:** Maximum of 600 characters  
 **Overlap:** 0 characters
 
-I used paragraph-aware chunking because the `campus_life` corpus contains 88 short posts ranging from 178 to 549 characters and usually containing one to three paragraphs. While inspecting the documents, I noticed that each post generally focuses on one campus topic and that useful details are often spread across multiple paragraphs. Therefore, I kept related paragraphs together unless adding another paragraph would exceed 600 characters. I used no overlap because the function splits only at paragraph boundaries instead of cutting through sentences. The chunks are produced by `chunker.py::split_documents`.
+I used paragraph-aware chunking with a maximum chunk size of 600 characters and no overlap. While inspecting the `campus_life` corpus, I noticed that its 88 documents are short posts, generally containing one to three paragraphs. Each document usually discusses one campus topic, but important supporting details are sometimes spread across multiple paragraphs.
+
+I therefore kept related paragraphs together unless adding another paragraph would exceed 600 characters. I used zero overlap because the splitter separates text at paragraph boundaries instead of cutting through sentences. This avoids unnecessary duplication while keeping each chunk understandable on its own. The chunks are produced by `chunker.py::split_documents`.
 
 ## Sample Chunks
 
@@ -86,6 +76,8 @@ The bad: no air conditioning, which matters for the first three weeks of Septemb
 Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.
 ```
 
+Each sample chunk contains enough context for someone to answer a related question without reading the text before or after it.
+
 ## Sample Answer
 
 **Question:** When are housing lottery numbers released?
@@ -93,22 +85,16 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 **Answer:**
 
 ```text
-Housing lottery numbers come out the second week of March (admin_housing_lottery.txt).
-Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advising_registration.txt, dining_halden_hall_followup.txt, housing_morrow_house.txt
+(best distance 0.381, cutoff 0.6)
 
-```
+Housing lottery numbers come out the second week of March (admin_housing_lottery.txt).
+
+Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advising_registration.txt, dining_halden_hall_followup.txt, housing_morrow_house.txt
 ```
 
 **My relevance cutoff:** 0.6
 
-<!-- The number you set in config.py, and how you got there.
-
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
-
-     Milestone 4. -->
+I selected a relevance cutoff of 0.6 after comparing five questions answered by the `campus_life` corpus with five clearly out-of-scope questions. The in-corpus distances ranged from 0.292 to 0.465, while the out-of-scope distances ranged from 0.825 to 0.934. There was a clear gap between 0.465 and 0.825, so 0.6 accepts all five in-corpus questions while rejecting all five out-of-scope questions.
 
 | Question | In corpus? | Best distance |
 |---|---|---:|
@@ -125,15 +111,9 @@ Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advisin
 
 ## How I Used AI
 
-**1.** I asked ChatGPT to help me design a chunking strategy for the `campus_life` corpus. It suggested paragraph-aware chunking with a maximum size of 600 characters. I checked the actual documents and noticed that they are short posts containing one to three paragraphs, with related details sometimes spread across those paragraphs. Based on that observation, I used a 600-character maximum and zero overlap so related paragraphs would remain together without duplicating text. I then inspected five sample chunks to confirm that each chunk could answer a question without requiring the surrounding text.
+**1. Chunking strategy:** I asked ChatGPT to help me design a chunking strategy for the `campus_life` corpus. It suggested paragraph-aware chunking with a maximum size of 600 characters. I inspected the corpus and noticed that the documents are short posts containing one to three paragraphs, with related information sometimes spread across those paragraphs. Based on that observation, I used a maximum chunk size of 600 characters and zero overlap. I then printed and inspected five chunks to confirm that each contained enough information to answer a question without surrounding text.
 
-**2.** I asked ChatGPT to help me interpret the retrieval distances from my evaluation run and choose a relevance cutoff. It compared the five in-corpus distances, which ranged from 0.292 to 0.465, with the five out-of-scope distances, which ranged from 0.825 to 0.934. It initially helped identify the gap between the two groups, but I confirmed the cutoff by running the questions through the application myself. I kept the cutoff at 0.6 because it accepted all five supported questions and rejected all five out-of-scope questions.
-
-
-<!-- ── Stretch features ─────────────────────────────────────────────────────
-     Doing one? Say so here BEFORE you start. A feature this README never
-     claims earns nothing.
-     ───────────────────────────────────────────────────────────────────────── -->
+**2. Relevance cutoff:** I asked ChatGPT to help me interpret the retrieval distances from my evaluation run. It identified the separation between the in-corpus distances of 0.292–0.465 and the out-of-scope distances of 0.825–0.934. I verified this by running all ten questions through the application myself. I kept the cutoff at 0.6 because it accepted all five supported questions and rejected all five out-of-scope questions.
 
 ---
 
