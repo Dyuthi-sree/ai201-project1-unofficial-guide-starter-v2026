@@ -88,17 +88,18 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 ## Sample Answer
 
-<!-- One complete question and answer, pasted as text, with the source line
-     visible. Milestone 4. -->
-
-**Question:**
+**Question:** When are housing lottery numbers released?
 
 **Answer:**
 
+```text
+Housing lottery numbers come out the second week of March (admin_housing_lottery.txt).
+Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advising_registration.txt, dining_halden_hall_followup.txt, housing_morrow_house.txt
+
 ```
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.6
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -110,23 +111,24 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
      Milestone 4. -->
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|---|---|---:|
+| When are housing lottery numbers released? | Yes | 0.381 |
+| Which part of Innisfree Hall is quieter? | Yes | 0.292 |
+| When is the best time to do laundry at Old Brewhouse? | Yes | 0.323 |
+| How is the STAT 150 course assessed? | Yes | 0.331 |
+| What signature is required to withdraw by week ten? | Yes | 0.465 |
+| What is the capital of Mongolia? | No | 0.825 |
+| How do I change the oil in a diesel engine? | No | 0.934 |
+| Who won the 1994 World Cup? | No | 0.886 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.844 |
+| How do I write a for loop in Rust? | No | 0.896 |
 
 ## How I Used AI
 
-<!-- Two specific moments. For each: what you asked for, what came back, and
-     what you changed about it.
+**1.** I asked ChatGPT to help me design a chunking strategy for the `campus_life` corpus. It suggested paragraph-aware chunking with a maximum size of 600 characters. I checked the actual documents and noticed that they are short posts containing one to three paragraphs, with related details sometimes spread across those paragraphs. Based on that observation, I used a 600-character maximum and zero overlap so related paragraphs would remain together without duplicating text. I then inspected five sample chunks to confirm that each chunk could answer a question without requiring the surrounding text.
 
-     "I asked Claude to write the chunking function from my notes. It ignored
-     the overlap, so I added that myself" is the level of detail we're after.
-     "I used AI to help me code" is not.
+**2.** I asked ChatGPT to help me interpret the retrieval distances from my evaluation run and choose a relevance cutoff. It compared the five in-corpus distances, which ranged from 0.292 to 0.465, with the five out-of-scope distances, which ranged from 0.825 to 0.934. It initially helped identify the gap between the two groups, but I confirmed the cutoff by running the questions through the application myself. I kept the cutoff at 0.6 because it accepted all five supported questions and rejected all five out-of-scope questions.
 
-     Milestone 5. -->
-
-**1.**
-
-**2.**
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
