@@ -163,13 +163,14 @@ I selected a relevance cutoff of 0.6 after comparing five questions answered by 
 
      Milestone 2. -->
 
+
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunks contain the answer | MET | All five questions passed in all three runs, exceeding the target of 4 of 5. The expected facts were present in the retrieved evidence. |
+| 2 | Every answer names a source | MET | All five generated answers named a source document in every run, meeting the target of 5 of 5. |
+| 3 | Gate stops out-of-corpus questions | MET | The relevance gate refused all five out-of-scope questions, exceeding the target of 4 of 5. |
+| 4 | Chunks preserve complete thoughts | MET | All five sampled chunks began and ended at sentence or paragraph boundaries and contained complete sentences, exceeding the target of 4 of 5. |
+| 5 | Sources are connected to retrieved evidence | MET | For all five questions, the source named in the generated answer appeared among the retrieved documents, meeting the target of 5 of 5. |
 
 ## Diagnoses
 
