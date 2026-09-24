@@ -197,10 +197,9 @@ One remaining weakness is that the system retrieves five chunks for every questi
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** I reduced `TOP_K` in `config.py` from 5 to 3. The system now retrieves the three closest chunks instead of five for each question.
 
-**Why I picked it:**
-
+**Why I picked it:** The baseline met all five criteria, but it retrieved five chunks even when one document contained the complete answer. Reducing `TOP_K` tests whether a smaller and more focused context can preserve accuracy and source grounding while removing unnecessary retrieved evidence.
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
 
