@@ -174,6 +174,9 @@ I selected a relevance cutoff of 0.6 after comparing five questions answered by 
 
 ## Diagnoses
 
+All five acceptance criteria were met during the baseline evaluation, so there were no failed pipeline stages to diagnose. The five questions ask for direct facts from short, topic-focused documents, which made the original targets relatively safe. Criterion 1 could be tightened in a future evaluation from 4 of 5 to 5 of 5 because retrieval successfully returned the expected evidence for every test question.
+
+One remaining weakness is that the system retrieves five chunks for every question even when the answer comes from a single document. The additional chunks may add irrelevant context and increase the amount of text sent to the language model.
 <!-- For each miss: which stage caused it, and how. The stage alone isn't
      enough — you need the mechanism.
 
