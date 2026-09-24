@@ -210,13 +210,17 @@ One remaining weakness is that the system retrieves five chunks for every questi
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunks contain the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Chunks preserve complete thoughts | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Sources are connected to retrieved evidence | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
 
 **Did it help?**
+
+Yes. Reducing `TOP_K` from 5 to 3 preserved the baseline results: all five in-scope questions passed in all three runs, all five out-of-scope questions were refused, and all five acceptance criteria remained met. The best retrieval distances were unchanged because the same closest chunks remained available.
+
+The change reduced the input-token count from 8,610 before the improvement to 5,766 after it, a reduction of approximately 33%. Total token usage decreased from 9,137 to 6,304, approximately 31%. Therefore, the system maintained its measured accuracy while sending less irrelevant context to the language model.
 
 <!-- Say plainly whether it did, and how you know. If it made things worse,
      say that — a change that backfired, honestly reported, earns full credit
