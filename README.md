@@ -229,17 +229,20 @@ The change reduced the input-token count from 8,610 before the improvement to 5,
 
      Milestone 4. -->
 
+
 ## What's Still Broken
 
-<!-- For each criterion still missed after your fix: what you'd do about it,
-     and why you stopped where you did.
+No acceptance criterion remained missed after the improvement. However, the evaluation uses only five direct, fact-based questions from short campus documents, so it does not prove that the system will perform equally well on ambiguous, multi-document, or heavily paraphrased questions.
 
-     "I ran out of time" is fine if it's true. Pretending nothing is left is
-     not.
-
-     Milestone 5. -->
+The substring scorer only checks whether the expected phrase appears in the generated answer. It could mark an answer as passing even if the answer also contains an unsupported claim. I stopped after one controlled improvement because making several changes simultaneously would make it difficult to determine which change caused the results.
 
 ## What I'd Do Differently
+
+I would tighten criterion 1 from 4 of 5 to 5 of 5 because both the before and after evaluations retrieved the expected evidence for all five test questions.
+
+I would also rewrite criterion 2 to require that every answer names a retrieved source and contains no unsupported factual claims. Merely checking for a filename does not guarantee that the complete answer is grounded. Finally, I would add at least one harder question whose answer requires information from multiple documents.
+
+
 
 <!-- Knowing what you know now — which of your five criteria would you write
      differently, and why?
